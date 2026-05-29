@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Readiness Sheet — @basmaunpacks</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F5EDE0;
+  --sand: #E8D9C5;
+  --terracotta: #B07D52;
+  --espresso: #2C1F14;
+  --bark: #6B4F35;
+  --border: rgba(44,31,20,0.12);
+  --border-med: rgba(44,31,20,0.2);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  background: var(--espresso);
+  color: var(--espresso);
+  min-height: 100vh;
+}
+
+/* ── GATE SCREEN ── */
+#gate {
+  min-height: 100vh;
+  background: var(--espresso);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+#gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(176,125,82,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(107,79,53,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.gate-inner {
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.gate-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(176,125,82,0.7);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.gate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.gate-title em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+.gate-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: rgba(245,237,224,0.55);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.gate-promise {
+  background: rgba(245,237,224,0.06);
+  border: 1px solid rgba(176,125,82,0.2);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+}
+
+.gate-promise-item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 10px;
+  font-size: 13.5px;
+  color: rgba(245,237,224,0.75);
+  line-height: 1.5;
+}
+.gate-promise-item:last-child { margin-bottom: 0; }
+
+.gate-promise-tick {
+  color: var(--terracotta);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gate-input {
+  background: rgba(245,237,224,0.08);
+  border: 1px solid rgba(176,125,82,0.3);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  width: 100%;
+}
+.gate-input::placeholder { color: rgba(245,237,224,0.3); }
+.gate-input:focus {
+  border-color: rgba(176,125,82,0.6);
+  background: rgba(245,237,224,0.11);
+}
+
+.gate-btn {
+  background: var(--terracotta);
+  color: var(--cream);
+  border: none;
+  border-radius: 10px;
+  padding: 15px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  width: 100%;
+}
+.gate-btn:hover { background: #9A6C42; }
+.gate-btn:active { transform: scale(0.99); }
+
+.gate-privacy {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,237,224,0.25);
+  text-align: center;
+  margin-top: 12px;
+}
+
+.gate-brand {
+  margin-top: 40px;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(245,237,224,0.2);
+}
+
+/* ── GUIDE ── */
+#guide {
+  display: none;
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+#guide.visible { display: block; }
+
+.guide-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+}
+
+/* Guide header */
+.guide-header {
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+.guide-header-eye {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 10px;
+}
+
+.guide-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--espresso);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.guide-header-title em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+.guide-header-sub {
+  font-size: 14px;
+  color: var(--bark);
+  line-height: 1.7;
+}
+
+/* Section */
+.section {
+  margin-bottom: 40px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--border-med);
+}
+
+/* Two questions */
+.question-block {
+  background: var(--espresso);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 14px;
+}
+.question-block-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(176,125,82,0.6);
+  margin-bottom: 8px;
+}
+.question-block-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--cream);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+.question-block-answer {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  background: rgba(176,125,82,0.15);
+  border-radius: 6px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.verdict-box {
+  background: var(--terracotta);
+  border-radius: 10px;
+  padding: 14px 20px;
+  text-align: center;
+}
+.verdict-box-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #fff;
+  font-style: italic;
+}
+
+/* Three layers */
+.layer-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.layer-row:last-child { border-bottom: none; }
+
+.layer-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--sand);
+  line-height: 1;
+  padding-top: 2px;
+}
+.layer-name {
+  font-weight: 500;
+  font-size: 14.5px;
+  color: var(--espresso);
+  margin-bottom: 3px;
+}
+.layer-body {
+  font-size: 13px;
+  color: var(--bark);
+  line-height: 1.65;
+}
+
+/* Debt check */
+.debt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+@media (max-width: 480px) { .debt-compare { grid-template-columns: 1fr; } }
+
+.debt-card {
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+.debt-card.pay {
+  background: var(--espresso);
+  color: var(--cream);
+}
+.debt-card.invest {
+  background: var(--sand);
+  color: var(--espresso);
+}
+.debt-card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 6px;
+}
+.debt-card-rate {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.debt-card.pay .debt-card-rate { color: var(--terracotta); }
+.debt-card.invest .debt-card-rate { color: var(--bark); }
+.debt-card-sub {
+  font-size: 12px;
+  opacity: 0.65;
+  line-height: 1.4;
+}
+
+.debt-rule {
+  font-size: 13.5px;
+  color: var(--bark);
+  line-height: 1.7;
+  font-style: italic;
+  padding: 12px 16px;
+  border-left: 2.5px solid var(--terracotta);
+}
+
+/* Number calculator */
+.calc-box {
+  background: white;
+  border: 0.5px solid var(--border-med);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 16px;
+}
+.calc-row:last-child { margin-bottom: 0; }
+.calc-label {
+  font-size: 13.5px;
+  color: var(--bark);
+  flex: 1;
+  line-height: 1.4;
+}
+.calc-input {
+  width: 100px;
+  border: none;
+  border-bottom: 1.5px solid var(--border-med);
+  padding: 4px 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--espresso);
+  text-align: right;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.2s ease;
+}
+.calc-input:focus { border-color: var(--terracotta); }
+.calc-input::placeholder { color: rgba(44,31,20,0.2); font-weight: 400; }
+
+.calc-result {
+  background: var(--espresso);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+.calc-result-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,237,224,0.55);
+}
+.calc-result-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+/* Money Map CTA */
+.mm-block {
+  background: var(--espresso);
+  border-radius: 14px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mm-block-eye {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(176,125,82,0.7);
+}
+.mm-block-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.3;
+}
+.mm-block-body {
+  font-size: 13.5px;
+  color: rgba(245,237,224,0.65);
+  line-height: 1.65;
+}
+.mm-block-link {
+  display: inline-block;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s ease;
+}
+.mm-block-link:hover { background: #9A6C42; }
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+  font-size: 11.5px;
+  color: rgba(107,79,53,0.5);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* Footer */
+.guide-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guide-footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  color: var(--bark);
+  font-style: italic;
+}
+.guide-footer-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(107,79,53,0.35);
+}
+</style>
+</head>
+<body>
+
+<!-- ── GATE ── -->
+<div id="gate">
+  <div class="gate-inner">
+    <div class="gate-eyebrow">@basmaunpacks · Free Resource</div>
+    <h1 class="gate-title">The <em>Readiness</em><br>Sheet</h1>
+    <p class="gate-subtitle">Six concepts that change how you think about money — on one page</p>
+
+    <div class="gate-promise">
+      <div class="gate-promise-item">
+        <span class="gate-promise-tick">✓</span>
+        <span>The two questions that determine whether you are ready to invest</span>
+      </div>
+      <div class="gate-promise-item">
+        <span class="gate-promise-tick">✓</span>
+        <span>The three-layer structure for your money — what goes where</span>
+      </div>
+      <div class="gate-promise-item">
+        <span class="gate-promise-tick">✓</span>
+        <span>The debt-versus-invest maths — the rule and the exception</span>
+      </div>
+      <div class="gate-promise-item">
+        <span class="gate-promise-tick">✓</span>
+        <span>A space to calculate your own number</span>
+      </div>
+    </div>
+
+    <div class="gate-form">
+      <input type="email" class="gate-input" id="emailInput" placeholder="Your email address" autocomplete="email">
+      <button class="gate-btn" onclick="unlockGuide()">Get the framework →</button>
+    </div>
+
+    <p class="gate-privacy">No spam. No selling your data. One email with this guide.</p>
+    <p class="gate-brand">@basmaunpacks · Money Unpacked</p>
+  </div>
+</div>
+
+<!-- ── GUIDE ── -->
+<div id="guide">
+  <div class="guide-inner">
+
+    <!-- Header -->
+    <div class="guide-header">
+      <div class="guide-header-eye">@basmaunpacks · Money Reset</div>
+      <h1 class="guide-header-title">The <em>Readiness</em><br>Sheet</h1>
+      <p class="guide-header-sub">Six concepts. One page. Use this before you invest a single pound.</p>
+    </div>
+
+    <!-- Section 1 — Two questions -->
+    <div class="section">
+      <div class="section-label">01 · The two questions</div>
+
+      <div class="question-block" style="margin-bottom:10px;">
+        <div class="question-block-num">Question one</div>
+        <div class="question-block-text">If something went wrong tomorrow — could you handle it without selling your investments?</div>
+        <div class="question-block-answer">You need: yes</div>
+      </div>
+
+      <div class="question-block" style="margin-bottom:14px;">
+        <div class="question-block-num">Question two</div>
+        <div class="question-block-text">Is anything you owe costing you more than the market is likely to give you back?</div>
+        <div class="question-block-answer">You need: no</div>
+      </div>
+
+      <div class="verdict-box">
+        <div class="verdict-box-text">Yes to question one. No to question two. That is ready. Not optimised — protected.</div>
+      </div>
+    </div>
+
+    <!-- Section 2 — Three layers -->
+    <div class="section">
+      <div class="section-label">02 · The three layers</div>
+
+      <div class="layer-row">
+        <div class="layer-num">1</div>
+        <div>
+          <div class="layer-name">Safety net — cash, accessible, not invested</div>
+          <div class="layer-body">Three to six months of essential expenses. This is not an investment. It is the buffer that stops one bad month from forcing you to sell at the wrong time. Until it exists — nothing moves to the market.</div>
+        </div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num">2</div>
+        <div>
+          <div class="layer-name">Goals — medium term, specific target</div>
+          <div class="layer-body">A real goal with a real date. A house deposit. A career pause. A move. The investment choice depends on how far away the date is — closer goals need less risk, not more.</div>
+        </div>
+      </div>
+
+      <div class="layer-row">
+        <div class="layer-num">3</div>
+        <div>
+          <div class="layer-name">Growth — long term, where the market works</div>
+          <div class="layer-body">Money you will not touch for ten years or more. This is where compound growth does its job. The longer the runway, the more volatility becomes noise rather than risk.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 — Debt check -->
+    <div class="section">
+      <div class="section-label">03 · The debt check</div>
+
+      <div class="debt-compare">
+        <div class="debt-card pay">
+          <div class="debt-card-label">Pay off first</div>
+          <div class="debt-card-rate">7%+</div>
+          <div class="debt-card-sub">Debt costing more than expected market return</div>
+        </div>
+        <div class="debt-card invest">
+          <div class="debt-card-label">Invest alongside</div>
+          <div class="debt-card-rate">&lt;7%</div>
+          <div class="debt-card-sub">Debt costing less — the maths favours both at once</div>
+        </div>
+      </div>
+
+      <div class="debt-rule">
+        Net wealth and accessible wealth are not the same number. A mortgage-free house and £158,000 in a liquid portfolio are different kinds of security. One you can spend. One you cannot.
+      </div>
+    </div>
+
+    <!-- Section 4 — Your number -->
+    <div class="section">
+      <div class="section-label">04 · Your number</div>
+
+      <div class="calc-box">
+        <div class="calc-row">
+          <div class="calc-label">Monthly essential expenses<br><small style="font-size:11px;opacity:0.6;">Rent/mortgage, food, utilities, transport. Not lifestyle.</small></div>
+          <input type="text" class="calc-input" id="expenses" placeholder="£0" oninput="calculate()">
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Minimum months covered<br><small style="font-size:11px;opacity:0.6;">Start at 3. Build to 6.</small></div>
+          <input type="text" class="calc-input" id="months" placeholder="3" oninput="calculate()">
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">Your safety net target</div>
+          <div class="calc-result-value" id="result">£ —</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5 — Money Map -->
+    <div class="section">
+      <div class="section-label">05 · The tool that does the maths</div>
+
+      <div class="mm-block">
+        <div class="mm-block-eye">Tool · Money Map</div>
+        <div class="mm-block-title">The number most people guess wrong</div>
+        <div class="mm-block-body">Most people estimate their essential monthly spend. The estimate is almost always too low — because it does not include irregular costs. Money Map parses your bank statements and shows you the real number. Free. No account required.</div>
+        <a href="https://basmaunpacks.com/moneymap" class="mm-block-link" target="_blank">Try Money Map →</a>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      This guide is for educational purposes only. It does not constitute financial advice. The numbers and examples used are illustrative. Please consider your own circumstances and consult a qualified financial adviser before making investment decisions.
+    </div>
+
+    <!-- Footer -->
+    <div class="guide-footer">
+      <div class="guide-footer-brand">@basmaunpacks</div>
+      <div class="guide-footer-note">Money Reset · May 2026</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function unlockGuide() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    document.getElementById('emailInput').style.borderColor = 'rgba(176,82,82,0.6)';
+    document.getElementById('emailInput').focus();
+    return;
+  }
+  // In production: POST email to your capture endpoint here
+  // fetch('/api/capture', { method: 'POST', body: JSON.stringify({ email }) })
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('guide').classList.add('visible');
+  window.scrollTo(0, 0);
+}
+
+// Allow Enter key to submit
+document.getElementById('emailInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') unlockGuide();
+});
+
+function calculate() {
+  const expenses = parseFloat(document.getElementById('expenses').value.replace(/[^0-9.]/g, '')) || 0;
+  const months = parseFloat(document.getElementById('months').value.replace(/[^0-9.]/g, '')) || 3;
+  const result = expenses * months;
+  document.getElementById('result').textContent = result > 0
+    ? '£' + result.toLocaleString('en-GB', { maximumFractionDigits: 0 })
+    : '£ —';
+}
+</script>
+</body>
+</html>
